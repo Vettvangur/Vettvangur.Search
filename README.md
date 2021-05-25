@@ -1,0 +1,1 @@
+# Vettvangur Umbraco Search Service
