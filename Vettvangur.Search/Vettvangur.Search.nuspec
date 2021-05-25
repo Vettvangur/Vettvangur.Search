@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Vettvangur.Search</id>
-    <version>1.0.0</version>
+    <version>1.0.3</version>
     <title>Vettvangur Umbraco Search</title>
     <authors>Vettvangur</authors>
     <owners>Vettvangur</owners>
@@ -12,10 +12,10 @@
     <releaseNotes>First release with fuzzy and wildcard functionality</releaseNotes>
     <copyright>Copyright 2021</copyright>
     <language>English</language>
+    <tags>Umbraco Search Examine Fuzzy Wildcard</tags>
     <dependencies>
       <dependency id="UmbracoCms.Core" version="8.0.0" />
       <dependency id="UmbracoCms.Web" version="8.0.0" />
     </dependencies>
-    <tags>Umbraco Search Examine Fuzzy Wildcard</tags>
   </metadata>
 </package>
