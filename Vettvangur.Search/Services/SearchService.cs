@@ -17,6 +17,8 @@ using Umbraco.Core.Logging;
 using Vettvangur.Search.Utilities;
 using Vettvangur.Search.Models;
 using Vettvangur.Search.Models.Enums;
+using Umbraco.Core.Composing;
+using Umbraco.Core;
 
 namespace Vettvangur.Search.Services
 {
@@ -29,6 +31,9 @@ namespace Vettvangur.Search.Services
             _logger = logger;
             _query = query;
         }
+
+        public static SearchService Instance => Current.Factory.GetInstance<SearchService>();
+
         public IEnumerable<PublishedSearchResult> Query(QueryRequest req, out long totalRecords)
         {
             totalRecords = 0;
