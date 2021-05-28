@@ -1,5 +1,4 @@
-# Vettvangur Umbraco 8 Search Service
-
+# Umbraco 8 Search Service
 
 ### Inject Service
 
