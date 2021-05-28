@@ -1,5 +1,24 @@
 # Vettvangur Umbraco 8 Search Service
 
+
+### Inject Service
+
+```
+    @using Vettvangur.Search.Service;
+
+    public class SearchController : UmbracoApiController
+    {
+        private readonly SearchService _ss;
+
+        public SearchController(SearchService ss)
+        {
+            _ss = ss;
+        }
+    }
+```
+
+### Example
+
 ```
             var contentFields = new List<SearchField>()
             {
@@ -50,4 +69,12 @@
             var productResults = _ss.Query(new QueryRequest() { Query = query, Culture = null, Fields = productFields, SearchNodeById = "1104", NodeTypeAlias = new string[] { "ekmProduct" } }, out long totalProducts);
 
             var contentResults = _ss.Query(new QueryRequest() { Query = query, Culture = culture, Fields = contentFields, NodeTypeAlias = new string[] { "frontpage", "subpage" } }, out long totalContent);
+```
+
+### Example of use inside of a view
+
+```
+    @using Vettvangur.Search.Services;
+
+    var searchResults = SearchService.Instance.Query(QueryRequest req);
 ```
