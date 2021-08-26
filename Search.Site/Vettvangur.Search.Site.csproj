@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Search.Site</RootNamespace>
-    <AssemblyName>Search.Site</AssemblyName>
+    <RootNamespace>Vettvangur.Search.Site</RootNamespace>
+    <AssemblyName>Vettvangur.Search.Site</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -387,9 +387,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Search.Core\Search.Core.csproj">
+    <ProjectReference Include="..\Search.Core\Vettvangur.Search.Demo.csproj">
       <Project>{7ec85a37-8013-43a4-8b30-208d3b34e603}</Project>
-      <Name>Search.Core</Name>
+      <Name>Vettvangur.Search.Demo</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

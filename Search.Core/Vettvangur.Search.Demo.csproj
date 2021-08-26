@@ -7,8 +7,8 @@
     <ProjectGuid>{7EC85A37-8013-43A4-8B30-208D3B34E603}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Search.Core</RootNamespace>
-    <AssemblyName>Search.Core</AssemblyName>
+    <RootNamespace>Vettvangur.Search.Core</RootNamespace>
+    <AssemblyName>Vettvangur.Search.Core</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

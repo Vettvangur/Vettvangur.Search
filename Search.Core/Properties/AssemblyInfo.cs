@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Search.Core")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Vettvangur Search")]
+[assembly: AssemblyDescription("Umbraco search service with fuzzy and wildcard functionality")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Search.Core")]
+[assembly: AssemblyCompany("Vettvangur")]
+[assembly: AssemblyProduct("Vettvangur.Search.Core")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

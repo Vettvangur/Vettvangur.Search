@@ -33,11 +33,13 @@ namespace Search.Core.Controllers
                 {
                     Name = "nodeName",
                     Booster = "^2.0",
+                    FuzzyConfiguration = "0.5"
                 },
                 new SearchField()
                 {
                     Name = "content",
-                    Booster = "^1.0"
+                    Booster = "^1.0",
+                    SearchType = SearchType.Fuzzy
                 },
                 new SearchField()
                 {
@@ -66,7 +68,8 @@ namespace Search.Core.Controllers
                 new SearchField()
                 {
                     Name = "description",
-                    Booster = "^1.0"
+                    Booster = "^1.0",
+                    SearchType = SearchType.Fuzzy
                 }
             };
 
@@ -77,7 +80,7 @@ namespace Search.Core.Controllers
                 Score = x.Score
             });
 
-            var contentResults = _ss.Query(new QueryRequest() { Query = query, Culture = culture, Fields = contentFields, SearchNodeById = "1125", NodeTypeAlias = new string[] { "frontpage", "subpage" } }, out long totalContent).Select(x => new {
+            var contentResults = _ss.Query(new QueryRequest() { Query = query, Culture = culture, Fields = contentFields, NodeTypeAlias = new string[] { "frontpage", "subpage" } }, out long totalContent).Select(x => new {
                 Id = x.Content.Id,
                 NodeName = x.Content.Name,
                 Score = x.Score
