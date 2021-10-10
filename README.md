@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Umbraco Search Service
-=======
 # Umbraco 8 Search Service
 
 ##### Install with Nuget
@@ -85,4 +82,3 @@ var contentResults = _ss.Query(new QueryRequest() { Query = query, Culture = cul
 
 var searchResults = SearchService.Instance.Query(QueryRequest req);
 ```
->>>>>>> 40d6715fdeab7df7ce700d1a7bd1fea3ae90eb24
