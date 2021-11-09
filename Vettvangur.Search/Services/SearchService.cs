@@ -53,7 +53,6 @@ namespace Vettvangur.Search.Services
                     .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(QueryParser.Escape);
 
-
                 int i = 0;
 
                 foreach (var term in searchTerms)
@@ -82,6 +81,11 @@ namespace Vettvangur.Search.Services
                             luceneQuery.Append(" " + term + ("~" + req.FuzzyConfiguration));
                         }
 
+                        if (req.SearchType == SearchType.Exact)
+                        {
+                            luceneQuery.Append(" (" + term + ") ");
+                        }
+
                         luceneQuery.Append(")");
 
                     }
@@ -100,6 +104,12 @@ namespace Vettvangur.Search.Services
                             {
                                 luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + "~" + field.FuzzyConfiguration + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
                             }
+
+                            if (req.SearchType == SearchType.Exact)
+                            {
+                                luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + ") ");
+                            }
+
                             luceneQuery.Append(")");
                         }
                         luceneQuery.Append(")");
@@ -139,7 +149,6 @@ namespace Vettvangur.Search.Services
             return null;
         }
 
-
         private string RemoveDiacritics(string text)
         {
             foreach (var characterMap in Characters)
@@ -175,45 +184,6 @@ namespace Vettvangur.Search.Services
             { ".", "" },
             { "&", "" },
         };
-
-        private Dictionary<string, string> StopWords = new Dictionary<string, string>
-        {
-            { "a", "" },
-            { "an", "" },
-            { "and", "" },
-            { "are", "" },
-            { "as", "" },
-            { "at", "" },
-            { "be", "" },
-            { "but", "" },
-            { "by", "" },
-            { "for", "" },
-            { "if", "" },
-            { "in", "" },
-            { "into", "" },
-            { "is", "" },
-            { "it", "" },
-            { "no", "" },
-            { "not", "" },
-            { "of", "" },
-            { "on", "" },
-            { "or", "" },
-            { "such", "" },
-            { "that", "" },
-            { "the", "" },
-            { "their", "" },
-            { "then", "" },
-            { "there", "" },
-            { "these", "" },
-            { "they", "" },
-            { "this", "" },
-            { "to", "" },
-            { "was", "" },
-            { "will", "" },
-            { "with", "" }
-        };
-
-
 
     }
 }
