@@ -1,3 +1,0 @@
- nuget.exe pack -IncludeReferencedProjects -properties Configuration=Release
-
-nuget pack -build -Symbols -SymbolPackageFormat snupkg -Properties Configuration=Release

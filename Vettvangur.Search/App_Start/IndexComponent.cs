@@ -2,9 +2,9 @@
 using Examine.LuceneEngine;
 using Examine.Providers;
 using System.Linq;
+using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Examine;
-
 namespace Vettvangur.Search.App_Start
 {
     public class IndexComponent : IComponent
@@ -35,7 +35,6 @@ namespace Vettvangur.Search.App_Start
             if (e.ValueSet.Category == IndexTypes.Content)
             {
                 string searchablePath = "";
-
                 foreach (var fieldValues in e.ValueSet.Values)
                 {
                     if (fieldValues.Key == "path")
@@ -50,13 +49,21 @@ namespace Vettvangur.Search.App_Start
                 }
 
                 e.ValueSet.TryAdd("searchPath", searchablePath);
-
             }
         }
 
         public void Terminate()
         {
+            foreach (var index in _examineManager.Indexes)
+            {
+                if (!(index is UmbracoExamineIndex umbracoIndex))
+                {
+                    continue;
+                }
 
+                ((BaseIndexProvider)index).TransformingIndexValues -= IndexerComponent_TransformingIndexValues;
+
+            }
         }
     }
 }

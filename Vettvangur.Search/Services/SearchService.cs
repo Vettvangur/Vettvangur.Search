@@ -37,116 +37,129 @@ namespace Vettvangur.Search.Services
         public IEnumerable<PublishedSearchResult> Query(QueryRequest req, out long totalRecords)
         {
             totalRecords = 0;
+            var luceneQuery = new StringBuilder();
 
-            if (ExamineManager.Instance.TryGetIndex(req.Indexer, out var index) || !(index is IUmbracoIndex umbIndex))
+            try
             {
-
-                var searcher = (BaseLuceneSearcher)index.GetSearcher();
-
-                var luceneQuery = new StringBuilder();
-
-                var queryWithOutStopWords = req.Query.RemoveStopWords();
-
-                var cleanQuery = RemoveDiacritics(string.IsNullOrEmpty(queryWithOutStopWords) ? req.Query : queryWithOutStopWords);
-
-                var searchTerms = cleanQuery
-                    .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(QueryParser.Escape);
-
-                int i = 0;
-
-                foreach (var term in searchTerms)
+                if (ExamineManager.Instance.TryGetIndex(req.Indexer, out var index) || !(index is IUmbracoIndex umbIndex))
                 {
-                    if (i != 0)
-                    {
-                        luceneQuery.Append(" AND ");
-                    }
 
-                    if (i == 0)
-                    {
-                        luceneQuery.Append("+");
-                    }
+                    var searcher = (BaseLuceneSearcher)index.GetSearcher();
 
-                    if (req.Fields == null || string.IsNullOrEmpty(queryWithOutStopWords))
-                    {
-                        luceneQuery.Append(" (");
+                    var queryWithOutStopWords = req.Query.RemoveStopWords();
 
-                        if (req.SearchType == SearchType.Wildcard || req.SearchType == SearchType.FuzzyAndWilcard)
+                    var cleanQuery = RemoveDiacritics(string.IsNullOrEmpty(queryWithOutStopWords) ? req.Query : queryWithOutStopWords);
+
+                    var searchTerms = cleanQuery
+                        .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(QueryParser.Escape);
+
+                    int i = 0;
+
+                    foreach (var term in searchTerms)
+                    {
+                        if (i != 0)
                         {
-                            luceneQuery.Append("*" + term + "*");
+                            luceneQuery.Append(" AND ");
                         }
 
-                        if (req.SearchType == SearchType.Fuzzy || req.SearchType == SearchType.FuzzyAndWilcard)
+                        if (i == 0)
                         {
-                            luceneQuery.Append(" " + term + ("~" + req.FuzzyConfiguration));
+                            luceneQuery.Append("+");
                         }
 
-                        if (req.SearchType == SearchType.Exact)
-                        {
-                            luceneQuery.Append(" (" + term + ") ");
-                        }
-
-                        luceneQuery.Append(")");
-
-                    }
-                    else
-                    {
-                        luceneQuery.Append(" (");
-                        foreach (var field in req.Fields)
+                        if (req.Fields == null || string.IsNullOrEmpty(queryWithOutStopWords))
                         {
                             luceneQuery.Append(" (");
-                            if (field.SearchType == SearchType.Wildcard || field.SearchType == SearchType.FuzzyAndWilcard)
+
+                            if (req.SearchType == SearchType.Wildcard || req.SearchType == SearchType.FuzzyAndWilcard)
                             {
-                                luceneQuery.Append("(" + field.Name.FieldCultureName(req.Culture) + ": " + "*" + term + "*" + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
+                                luceneQuery.Append("*" + term + "*");
                             }
 
-                            if (field.SearchType == SearchType.Fuzzy || field.SearchType == SearchType.FuzzyAndWilcard)
+                            if (req.SearchType == SearchType.Fuzzy || req.SearchType == SearchType.FuzzyAndWilcard)
                             {
-                                luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + "~" + field.FuzzyConfiguration + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
+                                luceneQuery.Append(" " + term + ("~" + req.FuzzyConfiguration));
                             }
 
                             if (req.SearchType == SearchType.Exact)
                             {
-                                luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + ") ");
+                                luceneQuery.Append(" (" + term + ") ");
                             }
 
                             luceneQuery.Append(")");
+
                         }
-                        luceneQuery.Append(")");
+                        else
+                        {
+                            luceneQuery.Append(" (");
+                            foreach (var field in req.Fields)
+                            {
+                                luceneQuery.Append(" (");
+                                if (field.SearchType == SearchType.Wildcard || field.SearchType == SearchType.FuzzyAndWilcard)
+                                {
+                                    luceneQuery.Append("(" + field.Name.FieldCultureName(req.Culture) + ": " + "*" + term + "*" + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
+                                }
+
+                                if (field.SearchType == SearchType.Fuzzy || field.SearchType == SearchType.FuzzyAndWilcard)
+                                {
+                                    luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + "~" + field.FuzzyConfiguration + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
+                                }
+
+                                if (req.SearchType == SearchType.Exact)
+                                {
+                                    luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + ") ");
+                                }
+
+                                luceneQuery.Append(")");
+                            }
+                            luceneQuery.Append(")");
+                        }
+
+                        i++;
                     }
 
-                    i++;
-                }
-
-                IQuery searchQuery = searcher.CreateQuery("content");
-
-                ((LuceneSearchQueryBase)searchQuery).QueryParser.AllowLeadingWildcard = true;
-
-                var booleanOperation = searchQuery
-                .NativeQuery(luceneQuery.ToString());
+                    IQuery searchQuery = searcher.CreateQuery("content");
 
 
-                if (req.NodeTypeAlias != null && req.NodeTypeAlias.Any())
-                {
-                    booleanOperation = booleanOperation.And().GroupedOr(new string[1] {
+                    ((LuceneSearchQueryBase)searchQuery).QueryParser.AllowLeadingWildcard = true;
+
+                    var booleanOperation = searchQuery
+                    .NativeQuery(luceneQuery.ToString());
+
+                    if (req.NodeTypeAlias != null && req.NodeTypeAlias.Any())
+                    {
+                        booleanOperation = booleanOperation.And().GroupedOr(new string[1] {
                         "__NodeTypeAlias"
                     }, req.NodeTypeAlias);
+                    }
+
+                    if (!string.IsNullOrEmpty(req.SearchNodeById))
+                    {
+                        booleanOperation = booleanOperation.And().Field("searchPath", "|" + req.SearchNodeById + "|");
+                    }
+
+                    _logger.Debug<SearchService>(booleanOperation.ToString());
+
+                    var results = _query.Search(booleanOperation, req.Page - 1, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
+
+                    return results;
+
                 }
 
-                if (!string.IsNullOrEmpty(req.SearchNodeById))
+            }
+            catch(Exception ex)
+            {
+                _logger.Error<SearchService>(ex, "Failed to query. " + ex.Message);
+
+                if (luceneQuery.Length > 0)
                 {
-                    booleanOperation = booleanOperation.And().Field("searchPath", "|" + req.SearchNodeById + "|");
+                    _logger.Info<SearchService>("Lucene Query" + luceneQuery.ToString());
                 }
-
-                _logger.Debug<SearchService>(booleanOperation.ToString());
-
-                var results = _query.Search(booleanOperation, req.Page - 1, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
-
-                return results;
 
             }
 
-            return null;
+            return Enumerable.Empty<PublishedSearchResult>();
         }
 
         private string RemoveDiacritics(string text)
