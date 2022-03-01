@@ -96,19 +96,20 @@ namespace Vettvangur.Search.Services
                             foreach (var field in req.Fields)
                             {
                                 luceneQuery.Append(" (");
+
                                 if (field.SearchType == SearchType.Wildcard || field.SearchType == SearchType.FuzzyAndWilcard)
                                 {
-                                    luceneQuery.Append("(" + field.Name.FieldCultureName(req.Culture) + ": " + "*" + term + "*" + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
+                                    luceneQuery.Append("(" + field.Name.FieldCultureName(field.Culture ?? req.Culture) + ": " + "*" + term + "*" + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
                                 }
 
                                 if (field.SearchType == SearchType.Fuzzy || field.SearchType == SearchType.FuzzyAndWilcard)
                                 {
-                                    luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + "~" + field.FuzzyConfiguration + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
+                                    luceneQuery.Append(" (" + field.Name.FieldCultureName(field.Culture ?? req.Culture) + ": " + term + "~" + field.FuzzyConfiguration + ")" + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
                                 }
 
-                                if (req.SearchType == SearchType.Exact)
+                                if (field.SearchType == SearchType.Exact)
                                 {
-                                    luceneQuery.Append(" (" + field.Name.FieldCultureName(req.Culture) + ": " + term + ") ");
+                                    luceneQuery.Append(" (" + field.Name.FieldCultureName(field.Culture ?? req.Culture) + ": " + term + ") " + (!string.IsNullOrEmpty(field.Booster) ? field.Booster : ""));
                                 }
 
                                 luceneQuery.Append(")");
