@@ -41,7 +41,7 @@ namespace Vettvangur.Search.Services
 
             try
             {
-                if (ExamineManager.Instance.TryGetIndex(req.Indexer, out var index) || !(index is IUmbracoIndex umbIndex))
+                if (req != null && !string.IsNullOrEmpty(req.Query) && (ExamineManager.Instance.TryGetIndex(req.Indexer, out var index) || !(index is IUmbracoIndex umbIndex)))
                 {
 
                     var searcher = (BaseLuceneSearcher)index.GetSearcher();
@@ -50,7 +50,7 @@ namespace Vettvangur.Search.Services
 
                     var cleanQuery = RemoveDiacritics(string.IsNullOrEmpty(queryWithOutStopWords) ? req.Query : queryWithOutStopWords);
 
-                    var searchTerms = cleanQuery
+                    var searchTerms = cleanQuery.Trim()
                         .Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                         .Select(QueryParser.Escape);
 
