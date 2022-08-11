@@ -142,7 +142,7 @@ namespace Vettvangur.Search.Services
 
                     _logger.Debug<SearchService>(booleanOperation.ToString());
 
-                    var results = _query.Search(booleanOperation, req.Page - 1, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
+                    var results = _query.Search(booleanOperation, req.Page, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
 
                     return results;
 
