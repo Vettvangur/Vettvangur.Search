@@ -8,17 +8,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+using Umbraco.Core;
+using Umbraco.Core.Composing;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Examine;
 using Umbraco.Web;
-using Umbraco.Core.Logging;
-using Vettvangur.Search.Utilities;
 using Vettvangur.Search.Models;
 using Vettvangur.Search.Models.Enums;
-using Umbraco.Core.Composing;
-using Umbraco.Core;
+using Vettvangur.Search.Utilities;
 
 namespace Vettvangur.Search.Services
 {

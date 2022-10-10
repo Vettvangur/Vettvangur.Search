@@ -2,7 +2,6 @@
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
-using Umbraco.Core.Mapping;
 using Umbraco.Core.Persistence;
 
 namespace Vettvangur.Search.App_Start

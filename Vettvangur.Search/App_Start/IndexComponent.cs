@@ -1,8 +1,6 @@
 ﻿using Examine;
-using Examine.LuceneEngine;
 using Examine.Providers;
 using System.Linq;
-using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Examine;
 namespace Vettvangur.Search.App_Start
