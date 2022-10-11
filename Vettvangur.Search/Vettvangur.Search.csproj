@@ -1,19 +1,52 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <OutputType>Library</OutputType>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <IsPackable>true</IsPackable>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <NuspecFile>Vettvangur.Search.nuspec</NuspecFile>
+
+    <!-- Package properties -->
+    <PackageId>Vettvangur.Search</PackageId>
+    <Version>2.0.1</Version>
+    <Title>Vettvangur Umbraco Search</Title>
+    <Authors>Vettvangur</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Vettvangur/Search</PackageProjectUrl>
+    <PackageIcon>images\VV_Logo.png</PackageIcon>
+    <Description>Umbraco 10 search service with fuzzy and wildcard functionality</Description>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Copyright>Copyright 2022</Copyright>
+    <PackageTags>Umbraco Search Examine Fuzzy Wildcard</PackageTags>
+
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!-- Package icon -->
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Core" Version="10.2.1" />
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.2.1" />
+    <None Include="..\VV_Logo.png" Pack="true" PackagePath="images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Umbraco.Cms.Core" Version="10.0.0" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.0.0" />
   </ItemGroup>
 
 </Project>

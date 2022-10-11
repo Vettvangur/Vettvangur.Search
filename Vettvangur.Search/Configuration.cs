@@ -1,4 +1,7 @@
-﻿namespace Vettvangur.Search
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Vettvangur.Search
 {
     public class Configuration
     {
