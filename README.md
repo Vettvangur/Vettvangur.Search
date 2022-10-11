@@ -1,8 +1,8 @@
-# Umbraco 8 Search Service
+# Umbraco 10 Search Service
 
 ##### Install with Nuget
 ```
-Install-Package Vettvangur.Search -Version 1.0.9
+Install-Package Vettvangur.Search -Version 2.0.0
 ```
 
 ### Inject Service
