@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Umbraco search service with fuzzy and wildcard functionality")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Vettvangur")]
-[assembly: AssemblyProduct("Vettvangur.Search")]
+[assembly: AssemblyProduct("Vettvangur.SearchOld")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -4,7 +4,7 @@ using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Persistence;
 
-namespace Vettvangur.Search.App_Start
+namespace Vettvangur.SearchOld.App_Start
 {
     class StartupComposer : IUserComposer
     {

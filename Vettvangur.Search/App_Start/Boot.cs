@@ -1,6 +1,6 @@
 ﻿using Umbraco.Core.Composing;
 
-namespace Vettvangur.Search.App_Start
+namespace Vettvangur.SearchOld.App_Start
 {
     /// <summary>
     /// Hooks into application boot, this is done to ensure all registrations have been made to

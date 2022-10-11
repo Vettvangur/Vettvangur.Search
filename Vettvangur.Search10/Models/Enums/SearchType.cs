@@ -1,4 +1,4 @@
-﻿namespace Vettvangur.SearchOld.Models.Enums
+﻿namespace Vettvangur.Search.Models.Enums
 {
     public enum SearchType
     {

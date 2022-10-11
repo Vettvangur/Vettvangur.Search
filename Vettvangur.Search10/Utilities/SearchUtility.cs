@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vettvangur.SearchOld.Utilities
+namespace Vettvangur.Search.Utilities
 {
     public static class SearchUtility
     {

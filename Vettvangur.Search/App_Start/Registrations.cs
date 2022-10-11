@@ -1,8 +1,8 @@
 ﻿using Umbraco.Core;
 using Umbraco.Core.Composing;
-using Vettvangur.Search.Services;
+using Vettvangur.SearchOld.Services;
 
-namespace Vettvangur.Search.App_Start
+namespace Vettvangur.SearchOld.App_Start
 {
     /// <summary>
     /// Registers the type mappings with Umbraco IoC.

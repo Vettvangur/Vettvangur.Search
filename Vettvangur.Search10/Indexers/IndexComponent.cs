@@ -1,9 +1,8 @@
 ﻿using Examine;
-using Examine.Providers;
-using System.Linq;
-using Umbraco.Core.Composing;
-using Umbraco.Examine;
-namespace Vettvangur.SearchOld.App_Start
+using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Infrastructure.Examine;
+
+namespace Vettvangur.Search
 {
     public class IndexComponent : IComponent
     {
@@ -46,7 +45,9 @@ namespace Vettvangur.SearchOld.App_Start
                     }
                 }
 
-                e.ValueSet.TryAdd("searchPath", searchablePath);
+                var updatedValues = e.ValueSet.Values.ToDictionary(x => x.Key, x => x.Value.ToList());
+                updatedValues.Add("searchPath", new List<object> { searchablePath });
+                e.SetValues(updatedValues.ToDictionary(x => x.Key, x => (IEnumerable<object>)x.Value));
             }
         }
 

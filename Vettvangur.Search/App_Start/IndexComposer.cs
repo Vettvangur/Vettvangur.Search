@@ -2,7 +2,7 @@
 using Umbraco.Core.Composing;
 using Umbraco.Web.Search;
 
-namespace Vettvangur.Search.App_Start
+namespace Vettvangur.SearchOld.App_Start
 {
     [ComposeAfter(typeof(ExamineComposer))]
     public class IndexComposer : IUserComposer
