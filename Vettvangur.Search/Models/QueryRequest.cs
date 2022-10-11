@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Vettvangur.SearchOld.Models.Enums;
+using Vettvangur.Search.Models.Enums;
 
-namespace Vettvangur.SearchOld.Models
+namespace Vettvangur.Search.Models
 {
     public class QueryRequest
     {

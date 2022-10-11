@@ -1,36 +1,34 @@
 ﻿using Examine;
-using Examine.LuceneEngine.Providers;
-using Examine.LuceneEngine.Search;
+using Examine.Lucene.Search;
 using Examine.Search;
-using Lucene.Net.QueryParsers;
-using System;
-using System.Collections.Generic;
+using Lucene.Net.QueryParsers.Classic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using Umbraco.Core;
-using Umbraco.Core.Composing;
-using Umbraco.Core.Logging;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Examine;
-using Umbraco.Web;
-using Vettvangur.SearchOld.Models;
-using Vettvangur.SearchOld.Models.Enums;
-using Vettvangur.SearchOld.Utilities;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Infrastructure.Examine;
+using Vettvangur.Search.Models;
+using Vettvangur.Search.Models.Enums;
+using Vettvangur.Search.Utilities;
 
-namespace Vettvangur.SearchOld.Services
+namespace Vettvangur.Search.Services
 {
     public class SearchService
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<SearchService> _logger;
         private readonly IPublishedContentQuery _query;
-        public SearchService(IPublishedContentQuery query, ILogger logger)
+        private readonly ExamineManager _examineManager;
+        public SearchService(
+            IPublishedContentQuery query,
+            ILogger<SearchService> logger,
+            ExamineManager examineManager)
         {
             _logger = logger;
             _query = query;
+            _examineManager = examineManager;
         }
 
-        public static SearchService Instance => Current.Factory.GetInstance<SearchService>();
+        public static SearchService Instance =>  Configuration.Resolver.GetService<SearchService>();
 
         public IEnumerable<PublishedSearchResult> Query(QueryRequest req, out long totalRecords)
         {
@@ -39,10 +37,10 @@ namespace Vettvangur.SearchOld.Services
 
             try
             {
-                if (req != null && !string.IsNullOrEmpty(req.Query) && (ExamineManager.Instance.TryGetIndex(req.Indexer, out var index) || !(index is IUmbracoIndex umbIndex)))
+                if (req != null && !string.IsNullOrEmpty(req.Query) && (_examineManager.TryGetIndex(req.Indexer, out var index) || !(index is IUmbracoIndex umbIndex)))
                 {
 
-                    var searcher = (BaseLuceneSearcher)index.GetSearcher();
+                    var searcher = index.Searcher;
 
                     var queryWithOutStopWords = req.Query.RemoveStopWords();
 
@@ -138,7 +136,7 @@ namespace Vettvangur.SearchOld.Services
                         booleanOperation = booleanOperation.And().Field("searchPath", "|" + req.SearchNodeById + "|");
                     }
 
-                    _logger.Debug<SearchService>(booleanOperation.ToString());
+                    _logger.LogDebug(booleanOperation.ToString());
 
                     var results = _query.Search(booleanOperation, req.Page, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
 
@@ -149,11 +147,11 @@ namespace Vettvangur.SearchOld.Services
             }
             catch(Exception ex)
             {
-                _logger.Error<SearchService>(ex, "Failed to query. " + ex.Message);
+                _logger.LogError(ex, "Failed to query. " + ex.Message);
 
                 if (luceneQuery.Length > 0)
                 {
-                    _logger.Info<SearchService>("Lucene Query" + luceneQuery.ToString());
+                    _logger.LogInformation("Lucene Query" + luceneQuery.ToString());
                 }
 
             }
