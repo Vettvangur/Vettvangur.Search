@@ -5,6 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Library</OutputType>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <NuspecFile>Vettvangur.Search.nuspec</NuspecFile>
   </PropertyGroup>
 
   <ItemGroup>
