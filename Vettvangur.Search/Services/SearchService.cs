@@ -14,6 +14,7 @@ using Umbraco.Core.Logging;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Examine;
 using Umbraco.Web;
+using Umbraco.Web.PublishedCache;
 using Vettvangur.Search.Models;
 using Vettvangur.Search.Models.Enums;
 using Vettvangur.Search.Utilities;
@@ -23,11 +24,11 @@ namespace Vettvangur.Search.Services
     public class SearchService
     {
         private readonly ILogger _logger;
-        private readonly IPublishedContentQuery _query;
-        public SearchService(IPublishedContentQuery query, ILogger logger)
+        private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
+        public SearchService(ILogger logger, IPublishedSnapshotAccessor publishedSnapshotAccessor)
         {
             _logger = logger;
-            _query = query;
+            _publishedSnapshotAccessor = publishedSnapshotAccessor;
         }
 
         public static SearchService Instance => Current.Factory.GetInstance<SearchService>();
@@ -140,9 +141,13 @@ namespace Vettvangur.Search.Services
 
                     _logger.Debug<SearchService>(booleanOperation.ToString());
 
-                    var results = _query.Search(booleanOperation, req.Page, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
+                    var queryResults = booleanOperation.Execute();
+                    var totalResults = queryResults.TotalItemCount;
+                    var publishedContentResults = queryResults.ToPublishedSearchResults(_publishedSnapshotAccessor.PublishedSnapshot);
 
-                    return results;
+                    //var results = _query.Search(booleanOperation, req.Page, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
+
+                    return publishedContentResults;
 
                 }
 
