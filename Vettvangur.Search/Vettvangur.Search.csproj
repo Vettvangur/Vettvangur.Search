@@ -1,18 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
 
 		<!-- Package properties -->
 		<PackageId>Vettvangur.Search</PackageId>
-		<Version>1.0.11</Version>
+		<Version>1.0.12</Version>
 		<Title>Vettvangur Umbraco Search</Title>
 		<Authors>Vettvangur</Authors>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/Vettvangur/Search</PackageProjectUrl>
 		<PackageIcon>images\VV_Logo.png</PackageIcon>
 		<Description>Umbraco 8 search service with fuzzy and wildcard functionality</Description>
-		<PackageReleaseNotes>Remove negative from skip</PackageReleaseNotes>
+		<PackageReleaseNotes>Use PublishedSnapshot</PackageReleaseNotes>
 		<Copyright>Copyright 2022</Copyright>
 		<PackageTags></PackageTags>
 

@@ -1,4 +1,4 @@
-﻿using Examine;
+using Examine;
 using Examine.LuceneEngine.Providers;
 using Examine.LuceneEngine.Search;
 using Examine.Search;
@@ -142,7 +142,7 @@ namespace Vettvangur.Search.Services
                     _logger.Debug<SearchService>(booleanOperation.ToString());
 
                     var queryResults = booleanOperation.Execute();
-                    var totalResults = queryResults.TotalItemCount;
+                    totalRecords = queryResults.TotalItemCount;
                     var publishedContentResults = queryResults.ToPublishedSearchResults(_publishedSnapshotAccessor.PublishedSnapshot);
 
                     //var results = _query.Search(booleanOperation, req.Page, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
