@@ -145,6 +145,12 @@ namespace Vettvangur.Search.Services
                     totalRecords = queryResults.TotalItemCount;
                     var publishedContentResults = queryResults.ToPublishedSearchResults(_publishedSnapshotAccessor.PublishedSnapshot);
 
+
+                    if (publishedContentResults.Count() > req.PageSize)
+                    {
+                        publishedContentResults = publishedContentResults.Skip((req.Page - 1) * req.PageSize).Take(req.PageSize);
+                    }
+
                     //var results = _query.Search(booleanOperation, req.Page, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
 
                     return publishedContentResults;
