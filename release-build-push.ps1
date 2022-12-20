@@ -10,6 +10,6 @@ nuget push $pkg -Source https://www.nuget.org/api/v2/package -NonInteractive -Sk
 
 Write-Host Pushing symbols to https://www.nuget.org/api/v2/package
 $snupkg = gci *.snupkg 
-nuget push $snupkg -Source https://www.nuget.org/api/v2/package -NonInteractive -verb
+nuget push $snupkg -Source https://www.nuget.org/api/v2/package -NonInteractive -Verbose
 
 pause
