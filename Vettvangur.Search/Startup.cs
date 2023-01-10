@@ -9,7 +9,7 @@ namespace Vettvangur.Search
     {
         public void Compose(IUmbracoBuilder builder)
         {
-            builder.Services.AddScoped<SearchService>();
+            builder.Services.AddTransient<SearchService>();
             builder.Components().Insert<IndexComponent>();
         }
     }

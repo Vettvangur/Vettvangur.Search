@@ -19,11 +19,11 @@ namespace Vettvangur.Search.Services
     {
         private readonly ILogger<SearchService> _logger;
         private readonly IPublishedContentQuery _query;
-        private readonly ExamineManager _examineManager;
+        private readonly IExamineManager _examineManager;
         public SearchService(
             IPublishedContentQuery query,
             ILogger<SearchService> logger,
-            ExamineManager examineManager)
+            IExamineManager examineManager)
         {
             _logger = logger;
             _query = query;
