@@ -7,14 +7,14 @@
 
     <!-- Package properties -->
     <PackageId>Vettvangur.Search</PackageId>
-    <Version>2.0.3</Version>
+    <Version>2.0.4</Version>
     <Title>Vettvangur Umbraco Search</Title>
     <Authors>Vettvangur</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Vettvangur/Search</PackageProjectUrl>
     <PackageIcon>images\VV_Logo.png</PackageIcon>
     <Description>Umbraco 10 search service with fuzzy and wildcard functionality</Description>
-    <PackageReleaseNotes>Update dependency</PackageReleaseNotes>
+    <PackageReleaseNotes>Better debug logging</PackageReleaseNotes>
     <Copyright>Copyright 2022</Copyright>
     <PackageTags>Umbraco Search Examine Fuzzy Wildcard</PackageTags>
 

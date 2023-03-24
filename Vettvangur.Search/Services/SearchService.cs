@@ -120,7 +120,6 @@ namespace Vettvangur.Search.Services
 
                     IQuery searchQuery = searcher.CreateQuery("content");
 
-
                     ((LuceneSearchQueryBase)searchQuery).QueryParser.AllowLeadingWildcard = true;
 
                     var booleanOperation = searchQuery
@@ -137,10 +136,13 @@ namespace Vettvangur.Search.Services
                     {
                         booleanOperation = booleanOperation.And().Field("searchPath", "|" + req.SearchNodeById + "|");
                     }
-
-                    _logger.LogDebug(booleanOperation.ToString());
+                    
+                    _logger.LogDebug("Index: " + searcher.Name);
+                    _logger.LogDebug("RawQuery: " + booleanOperation.ToString());
 
                     var results = _query.Search(booleanOperation, req.Page, req.PageSize, out totalRecords).OrderByDescending(x => x.Score);
+
+                    _logger.LogDebug("Total Records: " + totalRecords);
 
                     return results;
 
