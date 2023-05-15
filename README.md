@@ -1,4 +1,4 @@
-# Umbraco 10 Search Service
+# Umbraco 11 Search Service
 
 ##### Install with Nuget
 ```
