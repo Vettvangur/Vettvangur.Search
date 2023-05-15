@@ -2,7 +2,7 @@
 
 ##### Install with Nuget
 ```
-Install-Package Vettvangur.Search -Version 2.0.0
+Install-Package Vettvangur.Search -Version 3.0.0
 ```
 
 ### Inject Service
